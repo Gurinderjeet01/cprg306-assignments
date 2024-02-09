@@ -1,6 +1,5 @@
 import React from 'react';
-import ItemList from './item-list'; // Assuming the ItemList component is in the same directory
-
+import ItemList from './item-list'; 
 const Page = () => {
   return (
     <main className="container mx-auto px-4 py-8">
