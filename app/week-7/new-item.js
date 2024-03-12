@@ -12,9 +12,10 @@ const NewItem = ({ NewItem }) => {
         
         console.log(item)
         
-        alert`(Name: ${name}, Quantity: ${quantity}, Category: ${category})`;
+        alert(`Name: ${name}, Quantity: ${quantity}, Category: ${category}`);
 
-        const id = Math.random().toString(36); //this will generate a random id. 
+
+        const id = Math.random().toString(36);
         NewItem({id, name, quantity, category});
 
         setName("");
