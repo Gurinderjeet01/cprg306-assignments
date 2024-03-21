@@ -1,36 +1,50 @@
-import React from 'react';
-import { useUserAuth } from './_utils/auth-context';
+"use client";
+import Link from "next/link";
+import { useUserAuth } from "./_utils/auth-context";
 
-export default function Page() {
-    const { user, gitHubSignIn, firebaseSignOut } = useUserAuth(0);
+const LandingPage = () => {
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
-    const handleLogin = async () => {
-        try {
-          await gitHubSignIn();
-        } catch (error) {
-          console.error("Login failed:", error);
-        }
-      };
-    
-      const handleLogout = async () => {
-        try {
-          await firebaseSignOut();
-        } catch (error) {
-          console.error("Logout failed:", error);
-        }
-    };
-    return (
+  const handleSignIn = async () => {
+    try {
+      await gitHubSignIn();
+    } catch (error) {
+      console.error("Error signing in:", error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await firebaseSignOut();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  return (
+    <div>
+      {user ? (
         <div>
-        {user ? (
-          <>
-            <p>Welcome, {user.displayName} ({user.email})</p>
-            <button onClick={handleLogout}>Logout</button>
-            <a href="/shopping-list">Go to Shopping List</a>
-          </>
-        ) : (
-          <button onClick={handleLogin}>Login with GitHub</button>
-        )}
-      </div>      
-        
-    );
-}
+          <h1 className="text-3xl font-bold">Shopping List</h1>
+          <p>
+            Signed in as {user.displayName} ({user.email})
+          </p>
+          <button onClick={handleSignOut} className="hover:underline">Logout</button>
+          <Link href="/week-8/shopping-list">
+            <div className="hover:underline font-bold">Go to Shopping List</div>
+          </Link>
+        </div>
+      ) : (
+        <div>
+          <h1 className="text-3xl font-bold m-2">Shopping List</h1>
+          <p className="m-2"> Please sign in to continue:</p>
+          <button className="m-2 hover:underline" onClick={handleSignIn}>
+            Sign in with GitHub
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LandingPage;
